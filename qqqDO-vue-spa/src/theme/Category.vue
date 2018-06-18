@@ -16,44 +16,25 @@
   var greetings = require("../util/APIcall.js");
   var pathOne = 'http://52.14.168.26:8081/api/security/login'
   var pathTwo = 'http://52.14.168.26:8081/api/admin/city/add/'
-
-
   var data = new Object()
-  var headings = new Object()
   data.area = 'boulder'
   data.permits = ['https://www-static.bouldercolorado.gov/docs/opendata/2017_Construction_Permits.csv']
   data.geo = ['https://www-static.bouldercolorado.gov/docs/opendata/DevelopmentReview.GeoJSON']
-  //headings.Origin = 'http://localhost:3000'
-  //headings['Access-Control-Request-Method'] = 'POST'
-  headings['cache-control'] = 'no-cache, no store, max-age=0, must-revalidate'
-  //headings.authorization = resToken
-  headings['content-type'] = 'text/plain;charset=UTF-8'
-  headings['Access-Control-Allow-Origin'] = 'http://localhost:3000'
-  headings['Set-Cookie']= 'JSESSIONID=B6B308462C9B527F6C4E29D85D248FCA; Path=/; HttpOnly'
-  headings['Vary']= 'Origin'
-  //headings['Content-Length']= '40'
 
   var promise = greetings.APItoken(pathOne, 'admin', 'password', 'ADMIN')
 
   var postCity = function(url, token, data){
-    debugger
-    var dataCall = greetings.APIpost(url, headings, token, data)
-    debugger
+    var dataCall = greetings.APIpost(url, token, data)
     dataCall.done(function(response){
       console.log(response)
-      debugger
       return response
     })
   }
-debugger
   var token = promise.done(function(response){
     console.log('T: ' + response)
     postCity(pathTwo, response, data)
     return response
   })
-
-
-
 
   export default {
     components: {
